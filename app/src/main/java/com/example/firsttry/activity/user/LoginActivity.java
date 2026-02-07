@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.firsttry.Database.User;
 import com.example.firsttry.Database.UserDbHelper;
 import com.example.firsttry.R;
-import com.example.firsttry.activity.utils.VideoActivity;
+import com.example.firsttry.activity.hotel.HotelSearchComposeActivity;
 import com.example.firsttry.activity.reset_password.ForgetPasswordActivity;
 import com.example.firsttry.remote.Http.UserApi;
 
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                         // 仅 UI 操作回到主线程
                         runOnUiThread(() -> {
                             Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, VideoActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, HotelSearchComposeActivity.class);
                             startActivity(intent);
                             finish();
                         });

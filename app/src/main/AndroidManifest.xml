@@ -34,6 +34,8 @@
         <activity android:name=".activity.message.MessageActivity" />
         <activity android:name=".activity.message.chat.ChatActivity"/>
         <activity android:name=".activity.message.chat.remark.EditRemarkActivity" />
+        <activity android:name=".activity.hotel.HotelListActivity" />
+        <activity android:name=".activity.hotel.HotelSearchComposeActivity" />
     </application>
 
 </manifest>

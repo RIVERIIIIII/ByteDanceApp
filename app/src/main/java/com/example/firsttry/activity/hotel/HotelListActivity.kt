@@ -323,13 +323,17 @@ fun SubFilterBar(
                 selected = currentSortMode == HotelSortMode.DISTANCE,
                 onClick = { onSortChange(HotelSortMode.DISTANCE) },
                 label = { Text("直线距离") },
-                leadingIcon = { if (currentSortMode == HotelSortMode.DISTANCE) Icon(Icons.Default.Check, null) }
+                leadingIcon = if (currentSortMode == HotelSortMode.DISTANCE) {
+                    @Composable { Icon(Icons.Default.Check, null) }
+                } else null
             )
             FilterChip(
                 selected = currentSortMode == HotelSortMode.PRICE_LOW_TO_HIGH,
                 onClick = { onSortChange(HotelSortMode.PRICE_LOW_TO_HIGH) },
                 label = { Text("低价优先") },
-                leadingIcon = { if (currentSortMode == HotelSortMode.PRICE_LOW_TO_HIGH) Icon(Icons.Default.Check, null) }
+                leadingIcon = if (currentSortMode == HotelSortMode.PRICE_LOW_TO_HIGH) {
+                    @Composable { Icon(Icons.Default.Check, null) }
+                } else null
             )
         }
         
@@ -439,6 +443,7 @@ fun DateRangeDrawerContent(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FilterMenuContent(
     currentTags: List<String>,
@@ -452,7 +457,7 @@ fun FilterMenuContent(
         Text("设施服务", fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(8.dp))
         
-        FlowRow(
+        FlowRowHelper(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -467,7 +472,7 @@ fun FilterMenuContent(
                     },
                     label = { Text(tag) },
                     leadingIcon = if (selected) {
-                        { Icon(Icons.Default.Check, null) }
+                        @Composable { Icon(Icons.Default.Check, null) }
                     } else null
                 )
             }
@@ -499,9 +504,10 @@ fun FilterMenuContent(
 }
 
 // Helper for FlowRow if not available in older Compose (ExperimentalLayoutApi)
+// Renamed to avoid conflict
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun FlowRow(
+private fun FlowRowHelper(
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     content: @Composable FlowRowScope.() -> Unit

@@ -406,9 +406,10 @@ fun QuickFiltersSection(tags: List<String>, onTagClick: (String) -> Unit) {
 }
 
 // Helper for FlowRow if not available in older Compose (ExperimentalLayoutApi)
+// Renamed to avoid conflict with top-level or other file definitions
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun FlowRow(
+private fun FlowRowHelper(
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     content: @Composable FlowRowScope.() -> Unit
@@ -420,7 +421,7 @@ fun FlowRow(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun FilterBottomSheet(
     uiState: HotelSearchUiState,
@@ -466,7 +467,7 @@ fun FilterBottomSheet(
             Text("星级", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
             
-            FlowRow(
+            FlowRowHelper(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -480,7 +481,7 @@ fun FilterBottomSheet(
                         onClick = { onToggleStar(star) },
                         label = { Text(labels[star] ?: "") },
                         leadingIcon = if (selected) {
-                            { Icon(Icons.Default.Check, contentDescription = null) }
+                            @Composable { Icon(Icons.Default.Check, contentDescription = null) }
                         } else null
                     )
                 }
