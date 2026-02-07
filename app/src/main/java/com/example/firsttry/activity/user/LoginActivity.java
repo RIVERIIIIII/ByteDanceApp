@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                         // 仅 UI 操作回到主线程
                         runOnUiThread(() -> {
                             Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, VideoActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, com.example.firsttry.activity.hotel.HotelSearchComposeActivity.class);
                             startActivity(intent);
                             finish();
                         });

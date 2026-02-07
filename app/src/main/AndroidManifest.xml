@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -34,6 +36,8 @@
         <activity android:name=".activity.message.MessageActivity" />
         <activity android:name=".activity.message.chat.ChatActivity"/>
         <activity android:name=".activity.message.chat.remark.EditRemarkActivity" />
+        <activity android:name=".activity.hotel.HotelSearchComposeActivity" />
+        <activity android:name=".activity.hotel.HotelListActivity" />
     </application>
 
 </manifest>
