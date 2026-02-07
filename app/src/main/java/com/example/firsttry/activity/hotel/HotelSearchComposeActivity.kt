@@ -405,6 +405,21 @@ fun QuickFiltersSection(tags: List<String>, onTagClick: (String) -> Unit) {
     }
 }
 
+// Helper for FlowRow if not available in older Compose (ExperimentalLayoutApi)
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun FlowRow(
+    modifier: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    content: @Composable FlowRowScope.() -> Unit
+) {
+    androidx.compose.foundation.layout.FlowRow(
+        modifier = modifier,
+        horizontalArrangement = horizontalArrangement,
+        content = content
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun FilterBottomSheet(
