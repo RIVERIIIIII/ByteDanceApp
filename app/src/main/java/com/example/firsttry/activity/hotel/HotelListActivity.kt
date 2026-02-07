@@ -345,9 +345,16 @@ fun SubFilterBar(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HotelListItem(hotel: Hotel) {
+    val context = LocalContext.current
     Card(
+        onClick = {
+            val intent = Intent(context, HotelDetailActivity::class.java)
+            intent.putExtra("hotelId", hotel.id)
+            context.startActivity(intent)
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp),

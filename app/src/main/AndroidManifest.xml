@@ -36,6 +36,7 @@
         <activity android:name=".activity.message.chat.remark.EditRemarkActivity" />
         <activity android:name=".activity.hotel.HotelListActivity" />
         <activity android:name=".activity.hotel.HotelSearchComposeActivity" />
+        <activity android:name=".activity.hotel.HotelDetailActivity" />
     </application>
 
 </manifest>
