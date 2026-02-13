@@ -42,7 +42,9 @@ import com.example.firsttry.activity.message.MessageActivity
 import com.example.firsttry.model.City
 import com.example.firsttry.ui.theme.FirstTryTheme
 import com.example.firsttry.utils.LocationHelper
+import com.example.firsttry.model.BannerItem
 import com.example.firsttry.ui.component.CityPickerDialog
+import com.example.firsttry.ui.component.GlideImage
 import com.example.firsttry.ui.component.DateRangePickerDialog
 import com.example.firsttry.viewmodel.HotelSearchUiState
 import com.example.firsttry.viewmodel.HotelSearchViewModel
@@ -86,6 +88,13 @@ fun HotelSearchScreen(
     val context = LocalContext.current
     val locationHelper = remember { LocationHelper(context) }
     
+    // Define navigation to detail
+    val onNavigateToDetail: (String) -> Unit = { hotelId ->
+        val intent = Intent(context, HotelDetailActivity::class.java)
+        intent.putExtra("hotelId", hotelId)
+        context.startActivity(intent)
+    }
+    
     val locationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -125,7 +134,10 @@ fun HotelSearchScreen(
                 .fillMaxSize()
         ) {
             // 1. Banner
-            BannerSection()
+            BannerSection(
+                banners = uiState.banners,
+                onBannerClick = onNavigateToDetail
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -256,26 +268,35 @@ fun HotelSearchScreen(
 }
 
 @Composable
-fun BannerSection() {
-    val pagerState = rememberPagerState(pageCount = { 3 })
+fun BannerSection(
+    banners: List<BannerItem>,
+    onBannerClick: (String) -> Unit
+) {
+    if (banners.isEmpty()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .background(Color.LightGray),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("Loading...", color = Color.White)
+        }
+        return
+    }
+
+    val pagerState = rememberPagerState(pageCount = { banners.size })
     Box(modifier = Modifier
         .fillMaxWidth()
         .height(200.dp)) {
         HorizontalPager(state = pagerState) { page ->
-            Box(
+            val banner = banners[page]
+            GlideImage(
+                imageUrl = banner.imageUrl,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(
-                        when (page) {
-                            0 -> Color(0xFFE0E0E0)
-                            1 -> Color(0xFFBDBDBD)
-                            else -> Color(0xFF9E9E9E)
-                        }
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Banner Ad ${page + 1}", fontSize = 24.sp, color = Color.White)
-            }
+                    .clickable { onBannerClick(banner.hotelId) }
+            )
         }
         Row(
             Modifier
@@ -283,7 +304,7 @@ fun BannerSection() {
                 .padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            repeat(3) { iteration ->
+            repeat(banners.size) { iteration ->
                 val color = if (pagerState.currentPage == iteration) Color.White else Color.White.copy(alpha = 0.5f)
                 Box(
                     modifier = Modifier

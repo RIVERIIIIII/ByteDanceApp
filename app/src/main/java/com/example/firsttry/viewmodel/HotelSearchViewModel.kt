@@ -1,6 +1,7 @@
 package com.example.firsttry.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.firsttry.model.BannerItem
 import com.example.firsttry.model.City
 import com.example.firsttry.model.HotelSearchQuery
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,8 @@ data class HotelSearchUiState(
     val keyword: String = "",
     val popularTags: List<String> = listOf("含早", "免费取消", "近地铁", "大床房", "浴缸"),
     val cities: Map<Char, List<City>> = emptyMap(),
-    val isLocating: Boolean = false
+    val isLocating: Boolean = false,
+    val banners: List<BannerItem> = emptyList()
 )
 
 class HotelSearchViewModel : ViewModel() {
@@ -26,6 +28,16 @@ class HotelSearchViewModel : ViewModel() {
 
     init {
         loadCities()
+        loadBanners()
+    }
+
+    private fun loadBanners() {
+        val banners = listOf(
+            BannerItem("https://picsum.photos/800/400?random=101", "HOTEL_001"),
+            BannerItem("https://picsum.photos/800/400?random=102", "HOTEL_002"),
+            BannerItem("https://picsum.photos/800/400?random=103", "HOTEL_003")
+        )
+        _uiState.update { it.copy(banners = banners) }
     }
 
     private fun loadCities() {

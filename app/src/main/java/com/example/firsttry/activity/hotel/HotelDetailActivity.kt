@@ -43,6 +43,8 @@ import com.example.firsttry.ui.component.hoteldetail.StickyDateBar
 import com.example.firsttry.ui.theme.FirstTryTheme
 import com.example.firsttry.viewmodel.HotelDetailViewModel
 
+import android.util.Log
+
 class HotelDetailActivity : ComponentActivity() {
     private val viewModel: HotelDetailViewModel by viewModels()
 
@@ -50,6 +52,7 @@ class HotelDetailActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         
         val hotelId = intent.getStringExtra("hotelId") ?: ""
+        Log.d("HotelDetailActivity", "Received hotelId: $hotelId")
         
         setContent {
             FirstTryTheme {
