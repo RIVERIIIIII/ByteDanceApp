@@ -17,12 +17,14 @@
     <color name="colorAccent">#03DAC5</color>
 
     <!-- 美化界面用的新颜色 -->
-    <color name="background_main">#F5F5F5</color>
+    <color name="background_main">#F5F3F0</color> <!-- 浅燕麦米 -->
     <color name="background_content">#FFFFFF</color>
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#757575</color>
+    <color name="text_primary">#3E3232</color> <!-- 深墨棕 -->
+    <color name="text_secondary">#9E948A</color> <!-- 亚麻灰 -->
     <color name="divider_color">#E0E0E0</color>
     <color name="accent_red">#FF5252</color>
-    <color name="icon_tint_normal">#9E9E9E</color>
-    <color name="icon_tint_selected">#212121</color>
+    <color name="icon_tint_normal">#9E948A</color>
+    <color name="icon_tint_selected">#8C6A5E</color> <!-- 焦糖棕 -->
+    <color name="app_primary_brown">#8C6A5E</color> <!-- 焦糖棕 -->
+    <color name="app_secondary_sand">#D9C5B2</color> <!-- 暖沙色 -->
 </resources>
