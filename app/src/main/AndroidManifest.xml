@@ -41,6 +41,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.hotel.CityPickerActivity" />
         <activity android:name=".activity.hotel.HotelListActivity" />
+        <activity
+            android:name=".activity.hotel.HotelDetailActivity"
+            android:theme="@style/Theme.FirstTry" />
     </application>
 
 </manifest>

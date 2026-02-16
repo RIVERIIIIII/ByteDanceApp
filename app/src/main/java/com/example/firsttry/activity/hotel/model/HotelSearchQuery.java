@@ -12,8 +12,35 @@ public class HotelSearchQuery implements Serializable {
     private int starRating; // 0 for any, 2, 3, 4, 5
     private String keyword;
     private List<String> tags;
+    private double latitude;
+    private double longitude;
+    private boolean isLocationMode;
 
     public HotelSearchQuery() {
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public boolean isLocationMode() {
+        return isLocationMode;
+    }
+
+    public void setLocationMode(boolean locationMode) {
+        isLocationMode = locationMode;
     }
 
     public String getKeyword() {

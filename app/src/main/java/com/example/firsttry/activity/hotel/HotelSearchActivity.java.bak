@@ -22,7 +22,6 @@ import com.example.firsttry.activity.hotel.adapter.BannerAdapter;
 import com.example.firsttry.activity.hotel.dialog.CalendarDialogFragment;
 import com.example.firsttry.activity.hotel.dialog.FilterBottomSheetDialogFragment;
 import com.example.firsttry.activity.hotel.model.HotelSearchQuery;
-import com.example.firsttry.utils.LocationUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -131,34 +130,31 @@ public class HotelSearchActivity extends AppCompatActivity {
     }
 
     private void requestLocation() {
-        // UI Feedback: Positioning...
-        tvCity.setText("定位中...");
-        tvCity.setTextColor(getResources().getColor(R.color.app_primary_brown)); // Use caramel brown
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+            return;
+        }
+        
+        // Basic Location Manager implementation
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location == null) {
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
 
-        LocationUtils.requestLocation(this, LOCATION_PERMISSION_REQUEST_CODE, new LocationUtils.LocationCallback() {
-            @Override
-            public void onLocationSuccess(double latitude, double longitude, String cityName) {
-                // Update Model
-                searchQuery.setLatitude(latitude);
-                searchQuery.setLongitude(longitude);
-                searchQuery.setLocationMode(true);
-                searchQuery.setCity(cityName);
-                
-                // Update UI
-                tvCity.setText(cityName);
-                tvCity.setTextColor(getResources().getColor(R.color.text_primary)); // Reset color
-                Toast.makeText(HotelSearchActivity.this, "已为您定位到 " + cityName, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onLocationFailed(String errorMsg) {
-                // Revert UI
-                tvCity.setText("北京"); // Fallback to default or keep previous
-                searchQuery.setCity("北京");
-                tvCity.setTextColor(getResources().getColor(R.color.text_primary));
-                Toast.makeText(HotelSearchActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (location != null) {
+            // In a real app, use Geocoder to reverse geocode lat/lon to city name
+            String msg = "Lat: " + location.getLatitude() + ", Lon: " + location.getLongitude();
+            Toast.makeText(this, "定位成功: " + msg, Toast.LENGTH_LONG).show();
+            Log.d("HotelSearch", msg);
+            // Mock updating city
+            // tvCity.setText("当前位置"); 
+        } else {
+            Toast.makeText(this, "无法获取位置信息", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -169,9 +165,6 @@ public class HotelSearchActivity extends AppCompatActivity {
                 requestLocation();
             } else {
                 Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_SHORT).show();
-                // Reset UI if permission denied
-                tvCity.setText("北京");
-                tvCity.setTextColor(getResources().getColor(R.color.text_primary));
             }
         }
     }
@@ -214,8 +207,6 @@ public class HotelSearchActivity extends AppCompatActivity {
             if (selectedCity != null) {
                 tvCity.setText(selectedCity);
                 searchQuery.setCity(selectedCity);
-                // Disable location mode if manually selected
-                searchQuery.setLocationMode(false);
             }
         }
     }
@@ -247,13 +238,7 @@ public class HotelSearchActivity extends AppCompatActivity {
             }
         }
         searchQuery.setTags(selectedTags);
-        
-        // Ensure city is set
-        String currentCity = tvCity.getText().toString();
-        if (!"定位中...".equals(currentCity)) {
-             searchQuery.setCity(currentCity);
-        }
-        
+        searchQuery.setCity(tvCity.getText().toString());
         if (etKeyword != null) {
             searchQuery.setKeyword(etKeyword.getText().toString().trim());
         }

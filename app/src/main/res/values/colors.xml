@@ -27,4 +27,5 @@
     <color name="icon_tint_selected">#8C6A5E</color> <!-- 焦糖棕 -->
     <color name="app_primary_brown">#8C6A5E</color> <!-- 焦糖棕 -->
     <color name="app_secondary_sand">#D9C5B2</color> <!-- 暖沙色 -->
+    <color name="pale_linen">#EFEBE9</color> <!-- 极浅亚麻色 -->
 </resources>
