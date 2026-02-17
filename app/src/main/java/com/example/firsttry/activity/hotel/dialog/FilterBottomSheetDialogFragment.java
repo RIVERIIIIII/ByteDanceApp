@@ -44,7 +44,7 @@ public class FilterBottomSheetDialogFragment extends BottomSheetDialogFragment {
         rangeSlider.setValues(0f, 1300f);
 
         btnReset.setOnClickListener(v -> {
-            // Reset to initial range
+            // Reset to initial range but DO NOT dismiss
             rangeSlider.setValues(0f, 1300f);
             rgStarRating.clearCheck();
         });

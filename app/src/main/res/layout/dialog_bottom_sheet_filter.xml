@@ -46,53 +46,90 @@
         <RadioButton
             android:id="@+id/rb_star_2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="@string/star_2_below"/>
+            android:layout_marginEnd="4dp"
+            android:text="@string/star_2_below"
+            android:button="@null"
+            android:gravity="center"
+            android:background="@drawable/bg_star_rating_selector"
+            android:textColor="@color/text_color_star_selector"
+            android:textSize="14sp"/>
 
         <RadioButton
             android:id="@+id/rb_star_3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="@string/star_3"/>
+            android:layout_marginHorizontal="4dp"
+            android:text="@string/star_3"
+            android:button="@null"
+            android:gravity="center"
+            android:background="@drawable/bg_star_rating_selector"
+            android:textColor="@color/text_color_star_selector"
+            android:textSize="14sp"/>
         
         <RadioButton
             android:id="@+id/rb_star_4"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="@string/star_4"/>
+            android:layout_marginHorizontal="4dp"
+            android:text="@string/star_4"
+            android:button="@null"
+            android:gravity="center"
+            android:background="@drawable/bg_star_rating_selector"
+            android:textColor="@color/text_color_star_selector"
+            android:textSize="14sp"/>
 
         <RadioButton
             android:id="@+id/rb_star_5"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="@string/star_5"/>
+            android:layout_marginStart="4dp"
+            android:text="@string/star_5"
+            android:button="@null"
+            android:gravity="center"
+            android:background="@drawable/bg_star_rating_selector"
+            android:textColor="@color/text_color_star_selector"
+            android:textSize="14sp"/>
     </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="24dp"
+        android:paddingBottom="16dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_reset"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
+            android:layout_marginEnd="6dp"
             android:text="@string/action_reset"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            android:textColor="@color/app_primary_brown"
+            android:textSize="16sp"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/app_primary_brown"
+            app:strokeWidth="1dp"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_confirm"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
+            android:layout_marginStart="6dp"
             android:text="@string/action_done"
-            android:backgroundTint="@color/app_primary_brown"/>
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:backgroundTint="@color/app_primary_brown"
+            app:cornerRadius="12dp"/>
     </LinearLayout>
 
 </LinearLayout>
