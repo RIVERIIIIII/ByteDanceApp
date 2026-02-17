@@ -15,8 +15,35 @@ public class HotelSearchQuery implements Serializable {
     private double latitude;
     private double longitude;
     private boolean isLocationMode;
+    private int roomCount = 1;
+    private int adultCount = 1;
+    private int childCount = 0;
 
     public HotelSearchQuery() {
+    }
+
+    public int getRoomCount() {
+        return roomCount;
+    }
+
+    public void setRoomCount(int roomCount) {
+        this.roomCount = roomCount;
+    }
+
+    public int getAdultCount() {
+        return adultCount;
+    }
+
+    public void setAdultCount(int adultCount) {
+        this.adultCount = adultCount;
+    }
+
+    public int getChildCount() {
+        return childCount;
+    }
+
+    public void setChildCount(int childCount) {
+        this.childCount = childCount;
     }
 
     public double getLatitude() {

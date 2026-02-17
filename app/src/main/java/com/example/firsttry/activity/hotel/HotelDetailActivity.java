@@ -40,6 +40,21 @@ public class HotelDetailActivity extends AppCompatActivity {
     private TextView tvNights;
     private RecyclerView rvRoomList;
     private RoomTypeAdapter roomAdapter;
+    private ViewPager2 vpBanner;
+    
+    // Banner Auto Scroll
+    private android.os.Handler bannerHandler = new android.os.Handler(android.os.Looper.getMainLooper());
+    private Runnable bannerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (vpBanner != null && vpBanner.getAdapter() != null) {
+                int currentItem = vpBanner.getCurrentItem();
+                int nextItem = (currentItem + 1) % vpBanner.getAdapter().getItemCount();
+                vpBanner.setCurrentItem(nextItem, true);
+                bannerHandler.postDelayed(this, 3000);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,7 +115,7 @@ public class HotelDetailActivity extends AppCompatActivity {
     }
 
     private void setupBanner() {
-        ViewPager2 vpBanner = findViewById(R.id.vp_banner);
+        vpBanner = findViewById(R.id.vp_banner);
         List<Integer> images = Arrays.asList(
                 R.drawable.splash_image,
                 R.drawable.splash_image,
@@ -108,6 +123,23 @@ public class HotelDetailActivity extends AppCompatActivity {
         );
         BannerAdapter bannerAdapter = new BannerAdapter(images);
         vpBanner.setAdapter(bannerAdapter);
+        
+        // Start Auto Scroll
+        vpBanner.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                bannerHandler.removeCallbacks(bannerRunnable);
+                bannerHandler.postDelayed(bannerRunnable, 3000);
+            }
+        });
+        bannerHandler.postDelayed(bannerRunnable, 3000);
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bannerHandler.removeCallbacks(bannerRunnable);
     }
 
     private void setupRoomList() {

@@ -28,7 +28,7 @@
         app:cardBackgroundColor="@color/background_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.44"
+        app:layout_constraintVertical_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -165,19 +165,59 @@
                 android:id="@+id/et_keyword"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@drawable/bg_rounded_corner_top"
-                android:backgroundTint="#F0E6DD" 
+                android:background="@drawable/bg_search_capsule"
                 android:hint="位置 / 品牌 / 定位"
                 android:textColorHint="@color/text_secondary"
                 android:textColor="@color/text_primary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:drawableStart="@drawable/serach"
-                android:drawablePadding="8dp"
+                android:drawablePadding="12dp"
                 android:drawableTint="@color/app_primary_brown"
                 android:maxLines="1"
                 android:inputType="text"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="12dp"/>
+
+            <!-- Room & Guest Selection -->
+            <LinearLayout
+                android:id="@+id/layout_room_guest"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_search_capsule"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/user"
+                    app:tint="@color/app_primary_brown"
+                    android:layout_marginEnd="12dp"/>
+
+                <TextView
+                    android:id="@+id/tv_room_guest_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1间 · 1成人 · 0儿童"
+                    android:textSize="16sp"
+                    android:textColor="#3E3232"/>
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/right_arrow"
+                    app:tint="@color/text_secondary"/>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -189,18 +229,26 @@
             <LinearLayout
                 android:id="@+id/layout_filter"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp">
+                
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/star"
+                    app:tint="@color/app_primary_brown"
+                    android:layout_marginEnd="12dp"/>
                 
                 <TextView
                     android:id="@+id/tv_filter_trigger"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/filter_hint"
+                    android:text="价格区间及星级筛选"
                     android:textSize="16sp"
-                    android:textColor="@color/text_primary"/>
+                    android:textColor="#3E3232"/>
                     
                 <ImageView
                     android:layout_width="24dp"
@@ -211,55 +259,17 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Quick Tags (ChipGroup) -->
-    <HorizontalScrollView
-        android:id="@+id/scroll_tags"
+    <!-- Quick Tags (RecyclerView) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_quick_tags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:paddingHorizontal="16dp"
+        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/card_intent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/cg_quick_tags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:singleLine="true"
-            app:selectionRequired="false">
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tag_free_parking"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:textColor="@color/text_primary"
-                app:chipBackgroundColor="@color/background_content"
-                app:chipStrokeColor="@color/app_primary_brown"
-                app:chipStrokeWidth="1dp"/>
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tag_family_friendly"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:textColor="@color/text_primary"
-                app:chipBackgroundColor="@color/background_content"
-                app:chipStrokeColor="@color/app_primary_brown"
-                app:chipStrokeWidth="1dp"/>
-                
-             <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tag_breakfast"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:textColor="@color/text_primary"
-                app:chipBackgroundColor="@color/background_content"
-                app:chipStrokeColor="@color/app_primary_brown"
-                app:chipStrokeWidth="1dp"/>
-        </com.google.android.material.chip.ChipGroup>
-    </HorizontalScrollView>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Search Button -->
     <com.google.android.material.button.MaterialButton

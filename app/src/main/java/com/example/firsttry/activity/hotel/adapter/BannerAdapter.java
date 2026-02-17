@@ -15,9 +15,18 @@ import java.util.List;
 public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerViewHolder> {
 
     private final List<Integer> images;
+    private OnBannerClickListener listener;
+
+    public interface OnBannerClickListener {
+        void onBannerClick(int position);
+    }
 
     public BannerAdapter(List<Integer> images) {
         this.images = images;
+    }
+
+    public void setOnBannerClickListener(OnBannerClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,6 +39,13 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
     @Override
     public void onBindViewHolder(@NonNull BannerViewHolder holder, int position) {
         holder.imageView.setImageResource(images.get(position));
+        if (listener != null) {
+            holder.itemView.setOnClickListener(v -> listener.onBannerClick(position));
+            holder.itemView.setClickable(true);
+        } else {
+            holder.itemView.setOnClickListener(null);
+            holder.itemView.setClickable(false);
+        }
     }
 
     @Override

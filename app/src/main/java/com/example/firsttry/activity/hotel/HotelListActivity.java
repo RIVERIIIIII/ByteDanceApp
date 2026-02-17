@@ -43,6 +43,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.example.firsttry.activity.hotel.adapter.QuickFilterAdapter;
+
 public class HotelListActivity extends AppCompatActivity {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1003;
@@ -54,7 +56,9 @@ public class HotelListActivity extends AppCompatActivity {
     private FrameLayout flTopSheetContainer;
     private LinearLayout llTopSheetContent;
     private RecyclerView rvHotelList;
+    private RecyclerView rvQuickFilters;
     private HotelListAdapter adapter;
+    private QuickFilterAdapter quickFilterAdapter;
 
     // Top Sheet Views
     private TextView tvTopSheetCity;
@@ -147,6 +151,9 @@ public class HotelListActivity extends AppCompatActivity {
         // Reset Button
         popupView.findViewById(R.id.btn_reset).setOnClickListener(v -> {
             chipGroup.clearCheck();
+            if (quickFilterAdapter != null) {
+                quickFilterAdapter.clearSelection();
+            }
             Toast.makeText(this, "已重置筛选条件", Toast.LENGTH_SHORT).show();
         });
 
@@ -189,6 +196,7 @@ public class HotelListActivity extends AppCompatActivity {
         flTopSheetContainer = findViewById(R.id.fl_top_sheet_container);
         llTopSheetContent = findViewById(R.id.ll_top_sheet_content);
         rvHotelList = findViewById(R.id.rv_hotel_list);
+        rvQuickFilters = findViewById(R.id.rv_quick_filters);
         
         tvTopSheetCity = findViewById(R.id.tv_top_sheet_city);
         tvLocationStatus = findViewById(R.id.tv_location_status);
@@ -412,6 +420,42 @@ public class HotelListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
+        // Setup Quick Filters
+        rvQuickFilters.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        List<String> quickFilters = new ArrayList<>();
+        quickFilters.add("含早餐");
+        quickFilters.add("免费停车");
+        quickFilters.add("接送机");
+        quickFilters.add("静音房");
+        quickFilters.add("影音房");
+        quickFilters.add("近地铁");
+        quickFilters.add("4.8分+");
+        
+        quickFilterAdapter = new QuickFilterAdapter(quickFilters, activeFilters -> {
+            List<String> currentTags = searchQuery.getTags();
+            if (currentTags == null) currentTags = new ArrayList<>();
+            
+            List<String> finalTags = new ArrayList<>(currentTags);
+            finalTags.removeAll(quickFilters);
+            finalTags.addAll(activeFilters);
+            
+            searchQuery.setTags(finalTags);
+            refreshList();
+        });
+        
+        // Sync initial state from searchQuery (passed from Search Activity)
+        List<String> currentTags = searchQuery.getTags();
+        if (currentTags != null) {
+            for (String tag : currentTags) {
+                if (quickFilters.contains(tag)) {
+                    quickFilterAdapter.addActiveFilter(tag);
+                }
+            }
+        }
+        
+        rvQuickFilters.setAdapter(quickFilterAdapter);
+
+        // Setup Hotel List
         rvHotelList.setLayoutManager(new LinearLayoutManager(this));
         adapter = new HotelListAdapter(getMockData());
         rvHotelList.setAdapter(adapter);

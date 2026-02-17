@@ -109,6 +109,18 @@
 
         </LinearLayout>
 
+        <!-- Quick Filter Tags -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_quick_filters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_main"
+            android:paddingVertical="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:clipToPadding="false"
+            android:elevation="2dp" />
+
         <!-- Hotel List -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_hotel_list"
